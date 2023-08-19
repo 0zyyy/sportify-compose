@@ -1,4 +1,4 @@
-package com.example.sprotify.ui.setting
+package com.example.sprotify.ui.screens.setting
 
 import androidx.compose.runtime.Composable
 

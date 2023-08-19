@@ -1,4 +1,4 @@
-package com.example.sprotify.ui.home
+package com.example.sprotify.ui.screens.home
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
