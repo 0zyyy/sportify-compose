@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.sprotify.ui.screens.follow.FollowPlayersPage
-import com.example.sprotify.ui.screens.follow.FollowTeamsPage
+import com.example.sprotify.ui.screens.onboard.OnboardingScreen
 import com.example.sprotify.ui.theme.SprotifyTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SprotifyTheme {
                 // A surface container using the 'background' color from the theme
-                FollowTeamsPage()
+                OnboardingScreen()
             }
         }
     }
