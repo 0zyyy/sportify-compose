@@ -43,7 +43,7 @@ fun Header(
         ) {
             Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Arrow Back", tint = Color.White)
             Column {
-                Text(title, style = MaterialTheme.typography.headlineMedium)
+                Text(title, style = MaterialTheme.typography.headlineLarge)
                 Text(subtitleText,style = MaterialTheme.typography.bodyMedium)
             }
         }

@@ -1,9 +1,5 @@
 package com.example.sprotify.ui.screens.dashboard
 
-import android.util.LayoutDirection
-import android.util.Log
-import android.util.Size
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,17 +14,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -40,81 +36,85 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.asComposePath
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Density
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.PathParser
+import androidx.compose.ui.unit.sp
 import com.example.sprotify.R
 import com.example.sprotify.ui.theme.Brown80
-import com.example.sprotify.utils.CustomButton
-import com.google.android.material.chip.Chip
-import java.util.regex.Pattern
+import com.example.sprotify.ui.theme.SprotifyTheme
+import com.example.sprotify.utils.SectionTitle
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen() {
-    Scaffold(
-        topBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-//                    .height(128.dp)
-                    .padding(start = 16.dp, end = 16.dp, top = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(modifier = Modifier.width(140.dp)) {
-                    Image(
-                        painter = painterResource(id = R.drawable.logo_red),
-                        contentDescription = "Logo Red",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .width(140.dp)
-                            .height(50.dp)
-                    )
-                }
-                Icon(
-                    Icons.Rounded.Home, contentDescription = "Home", modifier = Modifier
-                        .size(24.dp)
-                        .aspectRatio(1f)
-                )
-            }
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues)
-        ) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        item {
+            Header()
             SearchBar()
             val list = listOf(
                 "Trending", "Football", "Basketball", "Cricket"
             )
-            Box(
+            LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp)
             ) {
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    items(list.size, itemContent = { item ->
-                        Log.d("DashboardScreen", "item: $item")
-                        Chip(name = list[item])
-                    })
+                items(list.size, itemContent = { item ->
+                    Chip(name = list[item])
+                })
+            }
+            DashboardHero()
+            SectionTitle(title = "FIFA WORLD CUP")
+            HighlightCard()
+            SectionTitle(title = "ALL LEAGUES")
+            LazyRow(modifier = Modifier.fillMaxWidth()) {
+                items(4) {
+                    LeagueCard()
                 }
             }
-
-            DashboardHero()
+            SectionTitle(title = "FEATURED MATCHES")
+            GridCard()
         }
+    }
+}
+
+@Composable
+fun Header() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+//                    .height(128.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(modifier = Modifier.width(140.dp)) {
+            Image(
+                painter = painterResource(id = R.drawable.logo_red),
+                contentDescription = "Logo Red",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .width(140.dp)
+                    .height(50.dp)
+            )
+        }
+        Icon(
+            Icons.Rounded.Home, contentDescription = "Home", modifier = Modifier
+                .size(24.dp)
+                .aspectRatio(1f)
+        )
     }
 }
 
@@ -192,7 +192,14 @@ fun SearchBar() {
 }
 
 @Composable
-fun DashboardHero(){
+fun DashboardHero() {
+    val contrast = 0.5f
+    val colorMatrix = floatArrayOf(
+        contrast, 0f, 0f, 0f, 0f,
+        0f, contrast, 0f, 0f, 0f,
+        0f, 0f, contrast, 0f, 0f,
+        0f, 0f, 0f, 1f, 0f
+    )
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -200,6 +207,12 @@ fun DashboardHero(){
             .padding(16.dp)
             .background(Color.Red)
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.orang),
+            contentDescription = "Logo Red",
+            contentScale = ContentScale.Crop,
+            colorFilter = ColorFilter.colorMatrix(ColorMatrix(colorMatrix)),
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -207,24 +220,201 @@ fun DashboardHero(){
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Bottom,
         ) {
-            Box(modifier = Modifier
-                .height(18.dp)
-                .width(68.dp)
-                .bac){
-                Row{
+            Box(
+                modifier = Modifier
+                    .padding(vertical = 2.dp, horizontal = 6.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(text = "\uD83D\uDD25")
-                    Text(text = "Top News")
+                    Text(
+                        text = "Top News", style = MaterialTheme.typography.bodyMedium.copy(
+                            fontSize = 12.sp,
+                            color = Color.White
+                        )
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "PHEONIX SUNS VS BOSTON CELTICS", style = MaterialTheme.typography.headlineMedium)
+            Text(
+                text = "PHEONIX SUNS VS BOSTON CELTICS",
+                style = MaterialTheme.typography.headlineLarge
+            )
             Row {
-                Text(text = "Basketball", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = "Basketball", style = MaterialTheme.typography.bodyMedium.copy(
+                        color = Color.Red
+                    )
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Wed 12.16", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "8.00 PM", style = MaterialTheme.typography.bodyMedium)
             }
         }
+    }
+}
+
+@Composable
+fun HighlightCard() {
+    // TODO: 20/08/2023 Gantien dadi seng bener
+    //
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(135.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
+            .background(color = Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.orang),
+                contentDescription = "Logo Red",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .width(160.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Column {
+                Box(
+                    modifier = Modifier
+                        .background(color = Color.Gray)
+                        .padding(vertical = 2.dp, horizontal = 8.dp)
+                ) {
+                    Text(
+                        text = "Highlight", style = MaterialTheme.typography.bodyMedium.copy(
+                            fontSize = 10.sp,
+                            color = Color.Black
+                        )
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Portugal vs Spain",
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontSize = 18.sp
+                    ),
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Watch the highlights from the match between...",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontSize = 10.sp,
+                        color = Color.Gray
+                    )
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun LeagueCard() {
+    // TODO 20/08/2023 Change the logo and text
+    Box(
+        modifier = Modifier
+            .padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .background(color = Color(0xFFEEEDED))
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.premire),
+                    contentDescription = "Premiere League Logo",
+                    modifier = Modifier
+                        .size(48.dp)
+                        .aspectRatio(1f)
+                )
+            }
+            Text(
+                "Premiere \nLeague",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontSize = 12.sp,
+                    color = Color.Black
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun GridCard() {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier
+            .height(525.dp)
+            .padding(16.dp)
+    ) {
+        items(4) {
+            Box(
+                modifier = Modifier
+                    .width(180.dp)
+                    .padding(vertical = 8.dp, horizontal = 16.dp)
+                    .background(color = Color.White)
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.orang),
+                        contentDescription = "Logo Red",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .width(171.dp)
+                            .height(132.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Qatar World Cup 2022",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.Center,
+                            color = Color(0xFF322D2D)
+                        )
+                    )
+                    Text(
+                        text = "Best of Portugal goals against Switzerland",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontSize = 14.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        ),
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DashboardPreview() {
+    SprotifyTheme {
+        DashboardScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Grid() {
+    SprotifyTheme {
+        GridCard()
     }
 }

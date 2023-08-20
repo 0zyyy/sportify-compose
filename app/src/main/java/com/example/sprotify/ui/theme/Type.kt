@@ -32,6 +32,12 @@ val Typography = Typography(
     ),
     headlineMedium = TextStyle(
         fontFamily = BebasNeue,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
+        color = Color.Black
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = BebasNeue,
         fontWeight = FontWeight.Bold,
         fontSize = 28.sp,
         color = Color.White

@@ -109,7 +109,8 @@ fun FollowButton() {
         Text(
             text = "FOLLOW", style = MaterialTheme.typography.headlineMedium.copy(
                 fontSize = 16.sp,
-                lineHeight = 10.sp
+                lineHeight = 10.sp,
+                color = Color.White,
             )
         )
     }
