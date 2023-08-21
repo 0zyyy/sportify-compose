@@ -48,6 +48,12 @@ val Typography = Typography(
         fontSize = 14.sp,
         color = Color.White
     ),
+    bodySmall = TextStyle(
+        fontFamily = Manrope,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        color = Color.Black
+    ),
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
