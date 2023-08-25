@@ -1,12 +1,9 @@
-package com.example.sprotify.utils
+package com.example.sprotify.ui.shared.components
 
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.LayoutDirection
-import java.lang.Math.tan
 
 class CustomButton(private val angle: Float,width: Float) : Shape {
     override fun createOutline(

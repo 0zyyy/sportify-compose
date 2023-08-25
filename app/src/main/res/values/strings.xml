@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Sprotify</string>
+    <string name="dashboard_route">Dashboard</string>
+    <string name="news_route">News</string>
+    <string name="clip_route">Clip</string>
+    <string name="user_route">User</string>
 </resources>

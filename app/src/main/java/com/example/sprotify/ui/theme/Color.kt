@@ -17,4 +17,4 @@ val Red40 = Color(0xFFCC4040)
 val Brown40 = Color(0xFF2F0000)
 
 val BackgroundColor = Color(0xFFFAFAFA)
-val BackgroundColor2 = Color(0xFF5B5757)
+val BackgroundColor2 = Color(0xFFFFFFFF)
