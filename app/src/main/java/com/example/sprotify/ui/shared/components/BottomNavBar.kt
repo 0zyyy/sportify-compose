@@ -27,7 +27,7 @@ fun BottomNavBar(
     NavigationBar(
         modifier = Modifier
             .fillMaxWidth()
-            .height(90.dp)
+            .height(70.dp)
             .padding(16.dp),
         containerColor = Color.White
     ) {

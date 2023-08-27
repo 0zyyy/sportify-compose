@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
@@ -23,7 +24,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -41,10 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import com.example.sprotify.R
-import com.example.sprotify.data.BottomNavigationScreens
-import com.example.sprotify.ui.shared.components.BottomNavBar
 import com.example.sprotify.ui.shared.components.LeagueCard
 import com.example.sprotify.ui.theme.SprotifyTheme
 
@@ -52,37 +49,19 @@ import com.example.sprotify.ui.theme.SprotifyTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MatchesScreen() {
-
-    val navController = rememberNavController()
-
-    val items = listOf(
-        BottomNavigationScreens.Dashboard,
-        BottomNavigationScreens.Clip,
-        BottomNavigationScreens.News,
-        BottomNavigationScreens.User
-    )
-
-    Scaffold(
-        containerColor = Color.Transparent,
-        bottomBar = {
-            BottomNavBar(items = items, navController = navController)
-        }
-    ) {
-        paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)){
-            LazyColumn() {
-                item {
-                    Header()
-                    LazyRow() {
-                        item {
-                            LeagueCard()
-                            LeagueCard()
-                            LeagueCard()
-                            LeagueCard()
-                        }
+    Box() {
+        LazyColumn() {
+            item {
+                Header()
+                LazyRow() {
+                    item {
+                        LeagueCard()
+                        LeagueCard()
+                        LeagueCard()
+                        LeagueCard()
                     }
-                    Tabbed()
                 }
+                Tabbed()
             }
         }
     }
@@ -100,13 +79,18 @@ fun Header() {
 
     ) {
         Text(text = "Matches", style = MaterialTheme.typography.titleLarge)
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        )) {
-            Text(text = "Football", style = MaterialTheme.typography.bodyMedium.copy(
-                color = Color.White,
-                fontWeight = FontWeight.SemiBold
-            ))
+        Button(
+            onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            ),
+            shape = CutCornerShape(15.dp)
+        ) {
+            Text(
+                text = "Football", style = MaterialTheme.typography.bodyMedium.copy(
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold
+                )
+            )
         }
     }
 }
@@ -175,7 +159,7 @@ fun PostMatchCard() {
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = "CHELSEA", style = MaterialTheme.typography.bodyLarge.copy(
+                    text = "LOHE", style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.SemiBold,
                         color = Color(0xFF322D2D)
                     )
@@ -189,12 +173,14 @@ fun PostMatchCard() {
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     "2", style = MaterialTheme.typography.titleMedium.copy(
-                        fontSize = 28.sp,
-                        color = Color(0xFF5B5757)
+                        fontSize = 16.sp,
+                        color = Color.Black
                     )
                 )
             }
         }
+
+
         Box(
             modifier = Modifier
                 .fillMaxWidth(0.5f)
@@ -212,7 +198,7 @@ fun PostMatchCard() {
                 Text(
                     "2",
                     style = MaterialTheme.typography.titleMedium.copy(
-                        fontSize = 28.sp,
+                        fontSize = 16.sp,
                         color = Color(0xFF5B5757)
                     )
                 )
@@ -226,11 +212,16 @@ fun PostMatchCard() {
                 Text(
                     text = "MAN UTD", style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF322D2D)
+                        color = Color(0xFF322D2D),
+                        fontSize = 14.sp
                     )
                 )
             }
         }
+
+
+
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -318,7 +309,10 @@ fun UpcomingMatchCard() {
                 .background(Color(0xFFEEEDED))
                 .padding(16.dp)
         ) {
-            Image(painter = painterResource(id = R.drawable.premire), contentDescription = "Premiere")
+            Image(
+                painter = painterResource(id = R.drawable.premire),
+                contentDescription = "Premiere"
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -333,7 +327,11 @@ fun UpcomingMatchCard() {
                     )
                 )
                 Spacer(modifier = Modifier.width(12.dp))
-                Image(painter = painterResource(id = R.drawable.chelsea), contentDescription = "Chelsea", modifier = Modifier.size(48.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.chelsea),
+                    contentDescription = "Chelsea",
+                    modifier = Modifier.size(48.dp)
+                )
             }
         }
 
@@ -345,20 +343,26 @@ fun UpcomingMatchCard() {
                 .background(Color(0xFFE3E3E3))
                 .padding(16.dp)
         ) {
-            Text(text = "7 PM", style = MaterialTheme.typography.bodyMedium.copy(
-                color = Color(0xFF5B5757),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 12.sp
-            ), modifier = Modifier
-                .align(Alignment.TopEnd)
-                .alpha(0.5f))
+            Text(
+                text = "7 PM", style = MaterialTheme.typography.bodyMedium.copy(
+                    color = Color(0xFF5B5757),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 12.sp
+                ), modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .alpha(0.5f)
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(painter = painterResource(id = R.drawable.chelsea), contentDescription = "Chelsea", modifier = Modifier.size(48.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.chelsea),
+                    contentDescription = "Chelsea",
+                    modifier = Modifier.size(48.dp)
+                )
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = "CHELSEA", style = MaterialTheme.typography.bodyLarge.copy(

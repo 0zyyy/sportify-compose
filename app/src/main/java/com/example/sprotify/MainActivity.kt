@@ -6,22 +6,23 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.sprotify.data.BottomNavigationScreens
 import com.example.sprotify.ui.screens.auth.LoginScreen
+import com.example.sprotify.ui.screens.auth.RegisterScreen
 import com.example.sprotify.ui.screens.dashboard.DashboardScreen
 import com.example.sprotify.ui.screens.follow.FollowPlayersPage
 import com.example.sprotify.ui.screens.highlights.HighlightScreen
 import com.example.sprotify.ui.screens.live.WatchLiveScreen
+import com.example.sprotify.ui.screens.onboard.OnboardingScreen
 import com.example.sprotify.ui.shared.components.BottomNavBar
 import com.example.sprotify.ui.theme.SprotifyTheme
 
@@ -39,13 +40,6 @@ class MainActivity : ComponentActivity() {
 
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,16 +51,26 @@ fun MainScreen(){
         BottomNavigationScreens.Clip,
         BottomNavigationScreens.User
     )
-    Scaffold(
-        containerColor = Color(0xFFFAFAFA),
-        bottomBar = {
-            BottomNavBar(navController = navController, items = bottomNavItems)
-        }
-    ) { paddingValues ->
-        MainScreenNavigationConfigurations(
-            navController = navController,
-            padding = paddingValues
+    val navBackStackEntry by navController!!.currentBackStackEntryAsState()
+    when(navBackStackEntry?.destination?.route){
+        "onboarding" -> OnboardingScreen(
+            navController = navController
         )
+        "login" -> LoginScreen(
+            navController = navController
+        )
+        "register" -> RegisterScreen()
+        else -> Scaffold(
+            containerColor = Color(0xFFFAFAFA),
+            bottomBar = {
+                BottomNavBar(navController = navController, items = bottomNavItems)
+            }
+        ) { paddingValues ->
+            MainScreenNavigationConfigurations(
+                navController = navController,
+                padding = paddingValues
+            )
+        }
     }
 }
 
@@ -74,9 +78,9 @@ fun MainScreen(){
 @Composable
 private fun MainScreenNavigationConfigurations(
     navController: NavHostController,
-    padding: PaddingValues = PaddingValues(0.dp)
+    padding: PaddingValues
 ) {
-    NavHost(navController, startDestination = BottomNavigationScreens.Clip.route) {
+    NavHost(navController, startDestination = BottomNavigationScreens.Dashboard.route) {
         composable(BottomNavigationScreens.Dashboard.route) {
             DashboardScreen()
         }
@@ -100,6 +104,17 @@ private fun MainScreenNavigationConfigurations(
         }
         composable("watch-live"){
             WatchLiveScreen()
+        }
+        composable("onboarding"){
+            OnboardingScreen(
+                navController = navController
+            )
+        }
+        composable("login"){
+            LoginScreen()
+        }
+        composable("register"){
+            RegisterScreen()
         }
     }
 }

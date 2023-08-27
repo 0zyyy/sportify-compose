@@ -19,12 +19,15 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sprotify.ui.screens.auth.components.Header
 import com.example.sprotify.ui.screens.auth.components.InputField
 import com.example.sprotify.ui.theme.SprotifyTheme
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navController: NavController? = null
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -74,7 +77,9 @@ fun LoginScreen() {
             }
             Spacer(modifier = Modifier.height(10.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                          navController?.navigate("register")
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp),

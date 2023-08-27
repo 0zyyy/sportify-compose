@@ -24,12 +24,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.sprotify.R
 import com.example.sprotify.ui.theme.SprotifyTheme
 
 
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    navController: NavController? = null
+) {
     Header()
     Column(
         modifier = Modifier
@@ -49,7 +52,9 @@ fun OnboardingScreen() {
                     .height(24.dp)
             )
         }
-        Content()
+        Content(
+            navController = navController
+        )
     }
 }
 
@@ -87,7 +92,9 @@ fun Header() {
 
 
 @Composable
-fun Content() {
+fun Content(
+    navController: NavController? = null
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -126,7 +133,9 @@ fun Content() {
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { /*TODO*/ }, modifier = Modifier
+                onClick = {
+                          navController?.navigate("login")
+                }, modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
                 colors = ButtonDefaults.buttonColors(

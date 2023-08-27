@@ -1,6 +1,5 @@
 package com.example.sprotify.ui.screens.notification
 
-import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -25,27 +24,18 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchColors
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
-import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,6 +43,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sprotify.R
+import com.example.sprotify.ui.shared.components.SectionTitle
 import com.example.sprotify.ui.theme.Red40
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,10 +63,10 @@ fun NotificationPage() {
                 .verticalScroll(rememberScrollState())
         ) {
             AllowNotif()
-            SectionTitle()
+            SectionTitle("LEAGUE ALERTS")
             AlertBox()
             AlertBox()
-            SectionTitle()
+            SectionTitle("LEAGUE ALERTS")
             AlertBox()
             AlertBox()
             AlertBox()
@@ -140,21 +131,6 @@ fun AllowNotif() {
     }
 }
 
-@Composable
-fun SectionTitle() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-    ) {
-        Text(
-            text = "LEAGUE ALERTS", style = MaterialTheme.typography.headlineMedium.copy(
-                color = Color.Black,
-                fontSize = 20.sp
-            )
-        )
-    }
-}
 
 @Composable
 fun AlertBox() {
